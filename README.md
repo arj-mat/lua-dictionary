@@ -13,9 +13,9 @@ players["player 2"] = {name = "oliver", score = 8};
 players["player 3"] = {name = "stella", score = 3};
 
 print("The highest scoring players are: " .. players:getValues():sort(function(a, b)
-	return a.score > b.score;
+   return a.score > b.score;
 end):map(function(player)
-	return player.name;
+   return player.name;
 end):concat(', ') .. '!');
 ```
 
