@@ -4,10 +4,6 @@
     This source code is licensed under the MIT license found in the LICENSE file in the root directory of this source tree. 
 ]]
 
-if not(define) then
-    require "lua-defs"; -- https://github.com/arj-mat/lua-defs
-end
-
 define "Dictionary" : Class {
     prototype = {
         add = function(self, key, value)
@@ -40,7 +36,8 @@ define "Dictionary" : Class {
             end
         end,
         map = function(self, callback)
-            local result = Dictionary();
+            local result = self.class();
+            result:setTypes('*', '*');
 
             local hasStoped = false;
             local iteration = {
@@ -61,7 +58,7 @@ define "Dictionary" : Class {
             return result;
         end,
         filter = function(self, callback)
-            return self:map(function(v, k)
+            return self:map(function(v, k, iteration)
                 return callback(v, k) and v or nil;
             end)
         end,
@@ -69,18 +66,27 @@ define "Dictionary" : Class {
             table.sort(self.__table, comparator);
         end,
         getKeys = function(self)
-            local result = {};
+            local result = self.class();
+            result:setTypes('*', '*');
             self:foreach(function(k, v)
-                table.insert(result, k);
+                result:add(result.count + 1, v);
             end)
             return result;
         end,
         getValues = function(self)
-            local result = {};
+            local result = self.class();
+            result:setTypes('*', '*');
             self:foreach(function(k, v)
-                table.insert(result, v);
+                result:add(result.count + 1, v);
             end)
             return result;
+        end,
+        concat = function(self, separator)
+            local str = "";
+            self:foreach(function(k, v)
+                str = str .. tostring(v) .. separator;
+            end);
+            return str:sub(1, #str - #separator);
         end,
         tostring = function(self)
             local str = "{ Dictionary" .. (self.name ~= "" and " " .. self.name or "")  .. " ";
@@ -99,7 +105,7 @@ define "Dictionary" : Class {
             self:setTypes('*', '*');
         end
 
-        rawset(self, 'name', "");
+        rawset(self, '__name', "");
         rawset(self, 'count', #self.__table > 0 and #self.__table or (function()
             local c = 0;
             for k in next, self.__table do
@@ -115,14 +121,14 @@ define "Dictionary" : Class {
     metatable = {
         __newindex = function(self, key, value)
             if (self.__types.key ~= '*' and not string.match(self.__types.key, type(key))) then
-                error("Index of type \"" .. type(key) .. "\" is not accepted as dictionary" ..  (self.name ~= "" and ' (' .. self.name .. ')' or "")  .. " requires it to be " .. self.__types.key .. ".", 2);
+                error("Index of type \"" .. type(key) .. "\" is not accepted as dictionary" ..  (self.__name ~= "" and ' (' .. self.__name .. ')' or "")  .. " requires it to be " .. self.__types.key .. ".", 2);
             end
             if (self.__types.value ~= '*' and type(value) ~= 'nil' and not string.match(self.__types.value, type(value))) then
-                error("Value of type \"" .. type(value) .. "\" is not accepted as dictionary" ..  (self.name ~= "" and ' (' .. self.name .. ')' or "")  .. " requires it to be " .. self.__types.value .. ".", 2);
+                error("Value of type \"" .. type(value) .. "\" is not accepted as dictionary" ..  (self.__name ~= "" and ' (' .. self.__name .. ')' or "")  .. " requires it to be " .. self.__types.value .. ".", 2);
             end
 
             if (self.__types.key == '*' and type(key) == 'nil') then
-                error("Attempt to index nil on a dictionary" ..  (self.name ~= "" and ' (' .. self.name .. ')' or "")  .. ".", 2);
+                error("Attempt to index nil on a dictionary" ..  (self.__name ~= "" and ' (' .. self.__name .. ')' or "")  .. ".", 2);
             end
 
             if (type(value) == 'nil' and type(self.__table[key]) ~= 'nil') then
