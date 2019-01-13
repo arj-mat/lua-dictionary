@@ -155,6 +155,6 @@ print( myFruits:filterAllRed():getFruitNames():concat(", ") );
 ```
 Printed lines from this example will be: `banana, strawberry, apple` and `strawberry, apple`.
 
-Dictionarys can be extened to another custom class as using Lua Defs define method. However, it cannot be extended multiple times.
+Dictionaries can be extended in another custom class as using Lua Defs define method. However, it cannot be extended multiple times.
 
 For example, this means that you can create a class `DictionaryOfFruits` extending from Dictionary, but you can't create another class named `DictionaryOfRedFruits` extending from DictionaryOfFruits. In this case, "DictionaryOfRedFruits" must be extended from Dictionary.
