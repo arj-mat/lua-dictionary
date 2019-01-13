@@ -85,8 +85,18 @@ ___
 
 :**tostring()** - the dictionary keys and values represented as strings on a readable format. This method is also called when requesting the dictionary as a string (it's the \_\_tostring meta event). Returns a string.
 
+You can implement your own methods without having to declare another class of Dictionary by simply putting them on *Dictionary.prototype*, as this example: 
+```lua
+Dictionary.prototype.myMethod = function(self)
+  --do something with self
+  return "something";
+end
+
+myDictionary = Dictionary();
+myDictionary:myMethod();
+```
 ___
-## IterationInterface
+## Iteration Interface
 ```lua
  {
     stop = function, -- stops the iteration loop, exactly the same what "break" would do. Returns nil.
@@ -95,7 +105,7 @@ ___
  }
 ```
 
-An iteration interface table is passed as the 3rd argument of the callback for **foreach** and **map** methods.
+An iteration interface is a table passed as the 3rd argument of the callback for **foreach** and **map** methods.
 
 Example of how to break a foreach method using the iteration interface:
 ```lua
