@@ -1,16 +1,16 @@
 # lua-dictionary
 Typed dictionary implementation for Lua
 
-Requires **Lua-Defs**, a pure Lua classes implementation script: https://github.com/arj-mat/lua-defs.
+Implements Lua Defs. See more at https://github.com/arj-mat/lua-defs.
 
 ## Usage example
 ```lua
-require "lua-dictionary"; --or copy-paste the content of lua-dictionary.lua into your script; Make sure that you also have lua-defs.lua.
+require "lua-dictionary"; -- or copy-paste the content of lua-dictionary.lua into your script.
 
 players = Dictionary('string', 'table');
-players["Guest 1"] = {};
-players["Guest 2"] = {};
-players["moderator 1"] = {};
+players["player 1"] = {foo = "bar"};
+players["player 2"] = {bar = "nothing"};
+players["player 3"] = {test = "foo"};
 ```
 
 This example will be used for the following documentation.
@@ -65,6 +65,8 @@ ___
 ## Dictionary methods and types
 :**add(**`key, value`**)** - literal method for performing `dictionary[key] = value` and returns the added value.
 
+If you want to keep your dictionary's structure as an array, you can use this method like `dictionary:add(dictionary.count + 1, value)`.
+
 :**remove(** `key`**)** - literal method for performing `dictionary[key] = nil`. Returns nil.
 
 :**setTypes(**`string keyTypesPattern, string valueTypesPattern`**)** - define the allowed types for keys and values. Returns nil.
@@ -84,6 +86,20 @@ ___
 :**concat(**`string separator`**)** - concatenate all the dictionary values as strings separated by the given argument. Returns string.
 
 :**tostring()** - the dictionary keys and values represented as strings on a readable format. This method is also called when requesting the dictionary as a string (it's the \_\_tostring meta event). Returns a string.
+
+## Notes on Dictionary methods
+
+**map()**, **filter()**, **getKeys()** and **getValues()** returns a non-typed dictionary of the same class of it's original. Non-typed means that it accepts any kind of data for keys and values.
+
+Here's the logic used inside of those functions:
+```lua
+ local resultDictionary = self.class(); -- calls for the current dictionary's class constructor
+ resultDictionary:setTypes('*', '*'); -- define id as non-typed, any value is accepted
+ ...
+ return resultDictionary;
+```
+Section *Dictionary class inheritance* below has an actual example of this concept.
+___
 
 You can implement your own methods without having to declare another class of Dictionary by simply putting them on *Dictionary.prototype*, as this example: 
 ```lua
