@@ -1,5 +1,5 @@
 # lua-dictionary
-Typed dictionary implementation for Lua
+Complete typed dictionary implementation for Lua.
 
 Implements Lua Defs. See more at https://github.com/arj-mat/lua-defs.
 
@@ -80,7 +80,7 @@ ___
 ## Dictionary methods and types
 :**add(**`key, value`**)** - literal method for performing `dictionary[key] = value` and returns the added value.
 
-If you want to keep your dictionary's structure as an array, you can use this method like `dictionary:add(dictionary.count + 1, value)`.
+> If you want to keep your dictionary's structure as an array, you can use this method like `dictionary:add(dictionary.count + 1, value)`.
 
 :**remove(** `key`**)** - literal method for performing `dictionary[key] = nil`. Returns nil.
 
