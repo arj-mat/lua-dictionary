@@ -5,7 +5,7 @@ Requires **Lua-Defs**, a pure Lua classes implementation script: https://github.
 
 ## Usage example
 ```lua
-require "lua-dictionary"; --or copy-paste the contnt of lua-dictionar.lua into your script;
+require "lua-dictionary"; --or copy-paste the content of lua-dictionary.lua into your script; Make sure that you also have lua-defs.lua.
 
 players = Dictionary('string', 'table');
 players["Guest 1"] = {};
