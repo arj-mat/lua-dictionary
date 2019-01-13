@@ -191,3 +191,5 @@ Printed lines from this example will be: `banana, strawberry, apple` and `strawb
 Dictionaries can be extended in another custom class as using Lua Defs define method. However, it cannot be extended multiple times.
 
 For example, this means that you can create a class `DictionaryOfFruits` extending from Dictionary, but you can't create another class named `DictionaryOfRedFruits` extending from DictionaryOfFruits. In this case, "DictionaryOfRedFruits" must be extended from Dictionary.
+
+If you're going to extend Dictionary with your custom class, make sure that your constructor can be called without any given arguments due to the needs of it for the methods described on section **Notes on Dictionary methods** above. 
