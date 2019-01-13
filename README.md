@@ -8,12 +8,25 @@ Implements Lua Defs. See more at https://github.com/arj-mat/lua-defs.
 require "lua-dictionary"; -- or copy-paste the content of lua-dictionary.lua into your script.
 
 players = Dictionary('string', 'table');
-players["player 1"] = {foo = "bar"};
-players["player 2"] = {bar = "nothing"};
-players["player 3"] = {test = "foo"};
+players["player 1"] = {name = "thomas", score = 2};
+players["player 2"] = {name = "oliver", score = 8};
+players["player 3"] = {name = "stella", score = 3};
+
+print("The highest scoring players are: " .. players:getValues():sort(function(a, b)
+	return a.score > b.score;
+end):map(function(player)
+	return player.name;
+end):concat(', ') .. '!');
 ```
 
-This example will be used for the following documentation.
+Outputed result: `The highest scoring players are: oliver, stella, thomas!`.
+
+What was done in this example?
+
+1. Before sorting the Dictionary we must get it as an array, so Lua can arrange it's values by sequencial key numbers. Method getValues() will return another dictionary containing all the values from the original, in this case, every player data table.
+2. Then we sort it with a simple comparation function and we get the same dictionary from the previous method returned again.
+3. Map will perform the given function over the sorted dictionary, replacing it's table with the string from the "name" field. Now we have a new dictionary that contains only strings.
+4. Last step is to concatenate it's values and separe them by comma and space.
 
 ## Initialization
 Supported initialization methods are the following:
@@ -77,7 +90,9 @@ If you want to keep your dictionary's structure as an array, you can use this me
 
 :**filter(**`function callback(value, key)`**)** - returns a new dictionary containing all the fields that have been caused a positive return value on the given function. Returns non-typed Dictionary.
 
-:**sort(**`function callback(a, b)`**)** - sort the dictionary source table using the given comparation function. Returns nil.
+:**sort(**`function callback(a, b)`**)** - sort the dictionary source table using the given comparation function. Returns the current dictionary.
+
+> Lua requires the table indexes to be sequencial numbers (as a array) in order to sort it. If your dictionary is not an array, consider  calling the method getValues() before, like `dictionary:getValues():sort(...)`.
 
 :**getKeys()** - return a new dictionary as an array containing the keys. Returns non-typed Dictionary.
 
