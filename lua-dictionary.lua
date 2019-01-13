@@ -5,8 +5,9 @@
 ]]
 
 (function()
-    --[[
+	--[[
 		Lua Defs
+		This implementation of Lua Defs does not contains Enumerators or custom Types. Only Classes and Classes inhertitance.
 		https://github.com/arj-mat/lua-defs
 		v1.0.2
 	]]
@@ -144,102 +145,6 @@
         });
     end
 
-    local function createEnum(fullEnumName, declaration)
-        local enumEnv, enumName = defineScopeByName(fullEnumName);
-        if (enumEnv[enumName].__isDefinition) then
-            DefinitionError('"' .. fullEnumName .. '" has already been defined.');
-            return;
-        end
-
-        local enum = {
-            valuesByKey = {},
-            keysByValue = {},
-            getNames = function(self)
-                --- Returns all the enumeration's name as an array
-                local names = {};
-                for key in next, self.valuesByKey do
-                    table.insert(names, key);
-                end
-                return names;
-            end,
-            getValues = function(self)
-                --Returns all the enumeration's values as an array
-                local values = {};
-                for value in next, self.keysByValue do
-                    table.insert(values, value);
-                end
-                return values;
-            end,
-            forEach = function(self, func)
-                --- Performs the given function on each element of the enumeration
-                --@param func Iteration callback
-                for key, value in next, self.valuesByKey do
-                    func(key, value);
-                end
-            end,
-            hasKey = function(self, index)
-                --- Checks if the given index exists as a key only
-                --@param index Enum declaration key
-                return self.valuesByKey[index] ~= nil;
-            end,
-            duplicateIndex = function(self, sourceIndex, ...)
-                --- Clone the index key and it's value into new indexes
-                --@param sourceIndex The enumeration key to have it's value associated to the new indexes
-                --@param ... Varag of new indexes to be included in the enumeration with the sourceIndex's value
-                for _, newIndex in next, {...} do
-                    self.valuesByKey[newIndex] = self.valuesByKey[sourceIndex];
-                end
-            end
-        };
-
-        if (#declaration > 0) then
-            --- If the provided declaration is given as an array:
-            for i = 1, #declaration do
-                enum.valuesByKey[i] = declaration[i];
-                enum.keysByValue[declaration[i]] = i;
-            end
-        else
-            --- Or as an dictionary:
-            for key, value in next, declaration do
-                enum.valuesByKey[key] = value;
-                enum.keysByValue[value] = key;
-            end
-        end
-
-        --- Metaevent __index for allowing to get results from keys or values:
-        setmetatable(enum, {
-            __index = function(self, index)
-                return enum.valuesByKey[index] or enum.keysByValue[index];
-            end
-        })
-
-        enumEnv[enumName] = enum;
-    end
-
-    local customTypes = {};
-
-    setmetatable(customTypes, {
-        __call = function(_, typeName, fullDefName)
-            return function(_, ...)
-                local targetEnv, defName = defineScopeByName(fullDefName);
-                targetEnv[defName] = customTypes[typeName](defName, ...);
-            end
-        end
-    });
-
-    local function defineType(name, declaration)
-        if (name:find("[^%a%_]")) then
-            DefinitionError('Invalid Type name "' .. name .. '". Only alphanumeric characters and underlines are accepted.');
-            return;
-        end
-        if (customTypes[name]) then
-            DefinitionError('Type "' .. name .. '" has already been defined.');
-            return;
-        end
-        customTypes[name] = declaration.declarationHandler;
-        _G[name] = declaration;
-    end
-
     _G['define'] = function(name)
         local definitions = {
             Class = function(_, declaration)
@@ -254,20 +159,11 @@
                     end
                     createClass(name, declaration);
                 end
-            end,
-            Enum = function(_, declaration)
-                createEnum(name, declaration);
-            end,
-            Type = function(_, declaration)
-                defineType(name, declaration);
             end
         };
 
         setmetatable(definitions, {
             __index = function(_, unknownDefName)
-                if (customTypes[unknownDefName]) then
-                    return customTypes(unknownDefName, name);
-                end
                 DefinitionError('Unknown definition type "' .. unknownDefName .. '".');
             end
         });
