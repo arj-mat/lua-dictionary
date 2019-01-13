@@ -62,7 +62,7 @@ Considering that you have defined your typed dictionary as in the usage example 
 
 ___
 ## Dictionary attributes
-**number count**
+number **count**
 Dictionary will always have the count attribute as the number of fields that it has.
 
 If you do `print(players.count)` on the usage example, the output result will be `3`.
@@ -71,9 +71,11 @@ If you pass any table on the Dictionary initialization, it will list it's elemen
 
 Whenever an field that was *nil* is set to any other type, the count is increased; and when a non-nil field is set to *nil*, it's decreased.
 ___
-**string \_\_name**
+string **\_\_name**
 Setting your dictionary's \_\_name attribute will help you to better identify bugs as it will be shown on the error messages related with the dictionary, specially while working with a typed one. 
-
+___
+table **\_\_table**
+The base table where all data is stored. Making changes directly into this table will skip type verification and won't update the dictionary's count attribute.
 ___
 ## Dictionary methods and types
 :**add(**`key, value`**)** - literal method for performing `dictionary[key] = value` and returns the added value.
