@@ -65,7 +65,7 @@ ___
 ## Dictionary methods and types
 :**add(**`key, value`**)** - literal method for performing `dictionary[key] = value` and returns the added value.
 
-:**remove(** `key`**)** - literal method for performing `dictionary[key] = nil` and returns the removed value.
+:**remove(** `key`**)** - literal method for performing `dictionary[key] = nil`. Returns nil.
 
 :**setTypes(**`string keyTypesPattern, string valueTypesPattern`**)** - define the allowed types for keys and values. Returns nil.
 
