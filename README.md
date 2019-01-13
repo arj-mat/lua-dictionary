@@ -77,9 +77,11 @@ ___
 
 :**sort(**`function callback(a, b)`**)** - sort the dictionary source table using the given comparation function. Returns nil.
 
-:**getKeys()** - the dictionary keys as strings. Returns an array of strings.
+:**getKeys()** - return a new dictionary as an array containing the keys. Returns non-typed Dictionary.
 
-:**getValues()** - the dictionary values as strings. Returns an array of strings.
+:**getValues()** - return a new dictionary as an array containing the values. Returns non-typed Dictionary.
+
+:**concat(**`string separator`**)** - concatenate all the dictionary values as strings separated by the given argument. Returns string.
 
 :**tostring()** - the dictionary keys and values represented as strings on a readable format. This method is also called when requesting the dictionary as a string (it's the \_\_tostring meta event). Returns a string.
 
@@ -138,10 +140,11 @@ myFruits[1] = {name = "banana", color = "yellow"};
 myFruits[2] = {name = "strawberry", color = "red"};
 myFruits[3] = {name = "apple", color = "red"};
 
+print( myFruits:getFruitNames():concat(", ") );
 print( myFruits:filterAllRed():getFruitNames():concat(", ") );
 ```
-Output result from this example will be: `strawberry, apple`.
+Printed lines from this example will be: `banana, strawberry, apple` and `strawberry, apple`.
 
 Dictionarys can be extened to another custom class as using Lua Defs define method. However, it cannot be extended multiple times.
 
-For example, this means that you can create a class `DictionaryOfFruits` extending from Dictionary, but you can't create another class named `DictionaryOfTastefulFruits` extending from DictionaryOfFruits. In this case, "DictionaryOfTastefulFruits" must be extended from Dictionary.
+For example, this means that you can create a class `DictionaryOfFruits` extending from Dictionary, but you can't create another class named `DictionaryOfRedFruits` extending from DictionaryOfFruits. In this case, "DictionaryOfRedFruits" must be extended from Dictionary.
