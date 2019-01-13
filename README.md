@@ -25,7 +25,7 @@ What was done in this example?
 
 1. Before sorting the Dictionary we must get it as an array, so Lua can arrange it's values by sequencial key numbers. Method getValues() will return another dictionary containing all the values from the original, in this case, every player data table.
 2. Then we sort it with a simple comparation function and we get the same dictionary from the previous method returned again.
-3. Map will perform the given function over the sorted dictionary, replacing it's table with the string from the "name" field. Now we have a new dictionary that contains only strings.
+3. Map will perform the given function over the sorted dictionary, replacing it's value with the string from the "name" field. Now we have a new dictionary that contains only strings.
 4. Last step is to concatenate it's values and separe them by comma and space.
 
 ## Initialization
