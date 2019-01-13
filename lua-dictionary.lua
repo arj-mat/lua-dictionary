@@ -234,6 +234,7 @@ define "Dictionary" : Class {
         end,
         sort = function(self, comparator)
             table.sort(self.__table, comparator);
+            return self;
         end,
         getKeys = function(self)
             local result = self.class();
