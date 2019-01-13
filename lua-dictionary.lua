@@ -4,6 +4,10 @@
     This source code is licensed under the MIT license found in the LICENSE file in the root directory of this source tree. 
 ]]
 
+if not(define) then
+    require "lua-defs"; -- https://github.com/arj-mat/lua-defs
+end
+
 define "Dictionary" : Class {
     prototype = {
         add = function(self, key, value)
