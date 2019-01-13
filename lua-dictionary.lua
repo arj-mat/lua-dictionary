@@ -93,7 +93,7 @@ define "Dictionary" : Class {
             return str:sub(1, #str - #separator);
         end,
         tostring = function(self)
-            local str = "{ Dictionary" .. (self.name ~= "" and " " .. self.name or "")  .. " ";
+            local str = "{ Dictionary" .. (self.__name ~= "" and " " .. self.__name or "")  .. " ";
             self:foreach(function(k, v)
                 str = str ..  string.format("\n    [%s] = %s,", tostring(k), tostring(v));
             end);
