@@ -3,6 +3,16 @@ Complete typed dictionary implementation for Lua.
 
 Implements Lua Defs. See more at https://github.com/arj-mat/lua-defs.
 
+# Summary
+- [Usage example](#usage-example)
+- [Initialization](#initialization)
+- [Typed Dictionaries](#typed-dictionaries)
+- [Dictionary attributes](#dictionary-attributes)
+- [Dictionary methods and types](#dictionary-methods-and-types)
+- [Notes on Dictionary methods](#notes-on-dictionary-methods)
+- [Iteration Interface](#iteration-interface)
+- [Dictionary class inheritance](#dictionary-class-inheritance)
+
 ## Usage example
 ```lua
 require "lua-dictionary"; -- or copy-paste the content of lua-dictionary.lua into your script.
