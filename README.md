@@ -31,7 +31,7 @@ end):concat(', ') .. '!');
 
 Outputed result: `The highest scoring players are: oliver, stella, thomas!`.
 
-What was done in this example?
+What was done for printing this result?
 
 1. Before sorting the Dictionary we must get it as an array, so Lua can arrange it's values by sequencial key numbers. Method getValues() will return another dictionary containing all the values from the original, in this case, every player data table.
 2. Then we sort it with a simple comparation function and we get the same dictionary from the previous method returned again.
@@ -60,7 +60,7 @@ When passing the two first arguments as strings, you're telling your Dictionary 
 
 You can also change the allowed types at any moment using the method `:setTypes()`, documented bellow.
 
-Those arguments are processed as Lua patterns, wich mean that you can allow multiple types by ussing the `|` pattern operator, like `string|number`, `string|table|boolean`.
+Those arguments are processed as Lua patterns, wich means that you can allow multiple types by ussing the `|` pattern operator, like `string|number`, `string|table|boolean`.
 
 You can also use `*` for allowing any kind of data for both the keys or values.
 
@@ -79,7 +79,7 @@ If you do `print(players.count)` on the usage example, the output result will be
 
 If you pass any table on the Dictionary initialization, it will list it's elements for updating the count attribute.
 
-Whenever an field that was *nil* is set to any other type, the count is increased; and when a non-nil field is set to *nil*, it's decreased.
+Whenever a field that was *nil* is set to any other type, the count is increased; and when a non-nil field is set to *nil*, it's decreased.
 ___
 string **\_\_name**
 Setting your dictionary's \_\_name attribute will help you to better identify bugs as it will be shown on the error messages related with the dictionary, specially while working with a typed one. 
