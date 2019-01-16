@@ -96,15 +96,15 @@ ___
 
 :**setTypes(**`string keyTypesPattern, string valueTypesPattern`**)** - define the allowed types for keys and values. Returns nil.
 
-:**foreach(**`function callback(key, value, IterationInterface`**)** - performs an iteration over the dictionary fields passing then and the IterationInterface for the given function. Returns nil. See *IterationInterface* bellow.
+:**foreach(**`function callback(key, value, IterationInterface`**)** - performs an iteration over the dictionary fields passing then and the IterationInterface for the given function. Returns nil. See *Iteration Interface* bellow.
 
-:**map(**`function callback(value, key, IterationInterface)`**)** - returns a new dictionary after applying the given function on the current dictionary fields. Returns non-typed Dictionary. See *IterationInterface* bellow.
+:**map(**`function callback(value, key, IterationInterface)`**)** - returns a new dictionary after applying the given function on the current dictionary fields. Returns non-typed Dictionary. See *Iteration Interface* bellow.
 
 :**filter(**`function callback(value, key)`**)** - returns a new dictionary containing all the fields that have been caused a positive return value on the given function. Returns non-typed Dictionary.
 
 :**sort(**`function callback(a, b)`**)** - sort the dictionary source table using the given comparation function. Returns the current dictionary.
 
-> Lua requires the table indexes to be sequencial numbers (as a array) in order to sort it. If your dictionary is not an array, consider  calling the method getValues() before, like `dictionary:getValues():sort(...)`.
+> Lua requires the table indexes to be sequencial numbers (as an array) in order to sort it. If your dictionary is not an array, consider  calling the method getValues() before, like `dictionary:getValues():sort(...)`.
 
 :**getKeys()** - return a new dictionary as an array containing the keys. Returns non-typed Dictionary.
 
@@ -178,7 +178,7 @@ define "DictionaryOfFruits" : extends "Dictionary" {
             end);
         end,
         getFruitNames = function(self)
-            return self:getValues():map(function(fruit)
+            return self:map(function(fruit)
                 return fruit.name;
             end);
         end
